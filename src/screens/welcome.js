@@ -8,10 +8,10 @@ const Welcome = ({ navigation }) => {
     const handleNavigation = () => {
         if (auth.currentUser) {
             // User is signed in, navigate to Home
-            navigation.navigate('Home');
+            navigation.replace('Home');
         } else {
             // No user is signed in, navigate to Login
-            navigation.navigate('Login');
+            navigation.replace('Login');
         }
     };
 

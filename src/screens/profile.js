@@ -14,7 +14,7 @@ const Profile = ({ navigation }) => {
             } else {
                 // User is signed out
                 setUser(null);
-                navigation.navigate('Login');
+                navigation.replace('Login');
             }
         });
 

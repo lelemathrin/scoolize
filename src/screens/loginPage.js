@@ -25,7 +25,7 @@ const LoginPage = ({ navigation }) => {
         } finally {
           setIsLoading(false);
         }
-      };      
+    };      
 
     return (
         <View style={styles.container}>

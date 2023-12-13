@@ -25,7 +25,7 @@ const QuestionTwo = ({ navigation }) => {
         }
 
         updateFormData('question2', selectedOptions);
-        navigation.navigate('QuestionThree');
+        navigation.navigate('QuestionThree'); // Navigate to the next question
     };
 
     return (

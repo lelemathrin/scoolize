@@ -3,6 +3,7 @@ import { View, Text, Button } from 'react-native';
 import { useFormContext } from '../../contexts/formContext'; // Correct import here
 
 const QuestionOne = ({ navigation }) => {
+
     const { updateFormData } = useFormContext(); // Use the hook to access context
 
     const handleAnswer = (answer) => {
@@ -13,8 +14,8 @@ const QuestionOne = ({ navigation }) => {
     return (
         <View>
             <Text>As-tu déjà identifié un domaine d'étude qui t'intéresse ?</Text>
-            <Button title="Oui" onPress={() => handleAnswer('Oui')} />
-            <Button title="Plus tard" onPress={() => handleAnswer('Plus tard')} />
+            <Button title="Oui" onPress={() => handleAnswer('oui')} />
+            <Button title="Non" onPress={() => handleAnswer('non')} />
         </View>
     );
 };

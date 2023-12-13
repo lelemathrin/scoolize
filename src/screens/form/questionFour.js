@@ -17,7 +17,7 @@ const QuestionFour = ({ navigation }) => {
         }
 
         updateFormData('question4', selectedOption);
-        navigation.navigate('QuestionFinish'); // Navigate to the Finish Screen
+        navigation.navigate('QuestionFinish'); // Navigate to the next question
     };
 
     const options = ['Moins de 5 km', '10 à 20 km', '20 à 35 km', '35 à 50 km', '50 à 100 km', 'Plus de 100 km'];

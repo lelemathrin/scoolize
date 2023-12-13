@@ -2,11 +2,15 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const FormStartScreen = ({ navigation }) => {
+
     return (
         <View style={styles.container}>
             <Text style={styles.text}>Would you like to start the form?</Text>
             <TouchableOpacity 
-                onPress={() => navigation.reset({ index: 0, routes: [{ name: 'QuestionOne' }] })} 
+                onPress={() => navigation.reset({ 
+                    index: 0, 
+                    routes: [{ name: 'QuestionOne'}],
+                })}
                 style={styles.button}>
                 <Text>Yes</Text>
             </TouchableOpacity>

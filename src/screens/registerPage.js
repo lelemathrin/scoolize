@@ -2,32 +2,35 @@ import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
 import React, { useState } from 'react';
 import { View, Text, TextInput, Button, StyleSheet, Alert } from 'react-native';
+import { useUserContext } from '../contexts/userContext';
 
 const RegisterPage = ({ navigation }) => {
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const { setUserId } = useUserContext();
 
     const handleSignUp = async () => {
-        setIsLoading(true); // Set loading to true at the start of the process
+        setIsLoading(true);
     
         try {
-            await createUserWithEmailAndPassword(auth, email, password);
-            // Handle the success scenario
-            // Reset navigation to Form 
+            const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+            const userId = userCredential.user.uid;
+            // Set the user ID in the context here
+            setUserId(userId);
+    
             navigation.reset({
                 index: 0,
                 routes: [{ name: 'Form' }],
             });
         } catch (error) {
             Alert.alert("Error", error.message);
-            setIsLoading(false); // Set loading to false if there's an error
+            setIsLoading(false);
         }
     
-        // If navigation does not occur in try block, reset loading state
-        // Remove the line below if navigation is handled inside the try block
         setIsLoading(false);
     };
+    
         
 
     return (
