@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, StyleSheet, Button } from 'react-native';
+import { View, Text, StyleSheet, Button, Alert } from 'react-native';
 import { getAuth, onAuthStateChanged } from 'firebase/auth';
-
+import ButtonLarge from '../components/buttonLarge';
 
 const Home = ({ navigation }) => {
     const [user, setUser] = useState(null);
@@ -25,12 +25,14 @@ const Home = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text>Home</Text>
+            <Text style={{ fontFamily: "Prompt-Black", fontSize: 36 }}>Home</Text>
             {user ? <Text>Bienvenue, {user.email}</Text> : <Text>Non connecté</Text>}
             <Button 
                 title="Profil"
                 onPress={() => navigation.navigate('Profile')}
             />
+
+
         </View>
     );
 };

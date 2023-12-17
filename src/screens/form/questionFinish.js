@@ -43,7 +43,7 @@ const FinishScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.congratsText}>Bravo, tu as fini le formulaire ! Des résultats personnalisés te seront proposés.</Text>
+            <Text style={styles.congratsText}>{'Félicitations ! Maintenant qu’on en sait plus sur toi, tu peux commencer à faire tes vœux. Nous serons là pour t’accompagner.'}</Text>
             <TouchableOpacity onPress={handleSubmitAndGoHome} style={styles.homeButton}>
                 <Text>Continuer</Text>
             </TouchableOpacity>

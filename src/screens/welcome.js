@@ -1,42 +1,75 @@
-import React from 'react';
-import { View, Text, Button, StyleSheet } from 'react-native';
-import { getAuth } from 'firebase/auth';
+import React, { useState } from "react";
+import {
+  ImageBackground,
+  View,
+  Text,
+  StyleSheet,
+  ActivityIndicator,
+} from "react-native";
+import { getAuth } from "firebase/auth";
+import ButtonLarge from "../components/buttonLarge";
 
 const Welcome = ({ navigation }) => {
-    const auth = getAuth();
+  const [imageLoaded, setImageLoaded] = useState(false);
+  const auth = getAuth();
 
-    const handleNavigation = () => {
-        if (auth.currentUser) {
-            // User is signed in, navigate to Home
-            navigation.replace('Home');
-        } else {
-            // No user is signed in, navigate to Login
-            navigation.replace('Login');
-        }
-    };
+  const handleNavigation = () => {
+    if (auth.currentUser) {
+      navigation.replace("Home");
+    } else {
+      navigation.replace("Login");
+    }
+  };
 
-    return (
+  return (
+    <ImageBackground
+      source={require("../../assets/welcome.png")}
+      style={styles.backgroundImage}
+      onLoadEnd={() => setImageLoaded(true)}
+    >
+      {imageLoaded ? (
         <View style={styles.container}>
-            <Text style={styles.title}>Welcome to the App</Text>
-            <Button 
-                title="Get Started" 
-                onPress={handleNavigation} 
-            />
+          <View style={styles.font}>
+            <Text style={styles.title}>Votre parcours,</Text>
+            <Text style={styles.title}>Notre mission.</Text>
+          </View>
+          <ButtonLarge
+            style={styles.bouton}
+            title="Commencer"
+            onPress={handleNavigation}
+          />
         </View>
-    );
+      ) : (
+        <ActivityIndicator size="large" color="#0339C5" /> // Or any other loading indicator
+      )}
+    </ImageBackground>
+  );
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        justifyContent: 'center',
-        alignItems: 'center',
-    },
-    title: {
-        fontSize: 24,
-        marginBottom: 20,
-    },
-    // Add more styling as needed
+  container: {
+    position: "absolute",
+    display: "flex",
+    alignItems: "center",
+    bottom: 40,
+    left: 0,
+    right: 0,
+  },
+  font: {
+    marginBottom: 30,
+  },
+  title: {
+    fontFamily: "Inter-Black",
+    color: "white",
+    fontSize: 40,
+    marginBottom: 20,
+  },
+  backgroundImage: {
+    width: "100%",
+    height: "100%",
+    justifyContent: "center", // Center the loading indicator
+    alignItems: "center",
+  },
 });
 
 export default Welcome;

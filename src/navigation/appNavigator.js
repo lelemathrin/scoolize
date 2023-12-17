@@ -26,7 +26,7 @@ const AppNavigator = () => {
 
     return (
       <NavigationContainer>
-        <Stack.Navigator initialRouteName={user ? "Home" : "Welcome"}>
+        <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName={user ? "Home" : "Welcome"}>
           {user ? (
             // User is signed in, 'Welcome' screen is not in the stack
             <>
