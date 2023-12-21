@@ -7,7 +7,6 @@ import QuestionThree from '../screens/form/questionThree';
 import QuestionFour from '../screens/form/questionFour';
 import FinishScreen from '../screens/form/questionFinish';
 import FormStartScreen from '../screens/form/questionStart';
-// Import other form screens...
 
 const FormStack = createStackNavigator();
 
@@ -20,7 +19,6 @@ const FormNavigator = () => (
             <FormStack.Screen name="QuestionThree" component={QuestionThree} />
             <FormStack.Screen name="QuestionFour" component={QuestionFour} />
             <FormStack.Screen name="QuestionFinish" component={FinishScreen} />
-            {/* Add other questions as needed */}
         </FormStack.Navigator>
     </FormProvider>
 );

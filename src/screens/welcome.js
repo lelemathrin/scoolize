@@ -15,7 +15,7 @@ const Welcome = ({ navigation }) => {
 
   const handleNavigation = () => {
     if (auth.currentUser) {
-      navigation.replace("Home");
+      navigation.replace("Main");
     } else {
       navigation.replace("Login");
     }

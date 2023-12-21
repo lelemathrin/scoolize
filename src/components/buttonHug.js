@@ -12,11 +12,11 @@ const ButtonLarge = ({ onPress, title, buttonColor = '#176CEC', textColor = 'whi
 
 const styles = StyleSheet.create({
   button: {
-    width: 300,
     borderRadius: 100,
     justifyContent: "center",
     alignItems: "center",
-    paddingVertical: 15,
+    paddingVertical: 20,
+    paddingHorizontal: 40,
   },
   text: {
     fontFamily: "Prompt-Regular",

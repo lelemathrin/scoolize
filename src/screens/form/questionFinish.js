@@ -34,7 +34,7 @@ const FinishScreen = ({ navigation }) => {
 
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Home' }],
+                routes: [{ name: 'Main' }],
             });
         } catch (error) {
             console.error("Error writing document: ", error);
