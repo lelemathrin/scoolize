@@ -18,6 +18,17 @@ const LoginPage = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [showPassword, setShowPassword] = useState(false);
+
+    const toggleShowPassword = () => {
+        setShowPassword(!showPassword);
+    };
+
+    const getPasswordIcon = () => {
+        return showPassword
+            ? require('../../assets/eye.png')
+            : require('../../assets/eye-off.png');
+    };
 
     const handleLogin = async () => {
         if (!email || !password) {
@@ -49,21 +60,35 @@ const LoginPage = ({ navigation }) => {
                         style={styles.logo}
                     />
                     <Text style={styles.title}>Connexion</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Votre mail"
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Votre mot de passe"
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry
-                    />
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Votre mail"
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                        />
+                    </View>
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Mot de passe</Text>
+                        <View style={styles.passwordInput}>
+                            <TextInput
+                                style={styles.passwordTextInput}
+                                placeholder="Votre mot de passe"
+                                value={password}
+                                onChangeText={setPassword}
+                                secureTextEntry={!showPassword}
+                            />
+                            <TouchableOpacity onPress={toggleShowPassword}>
+                                <Image
+                                    source={getPasswordIcon()}
+                                    style={styles.eyeIcon}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
                     <TouchableOpacity
                         style={styles.button}
                         onPress={handleLogin}
@@ -79,7 +104,7 @@ const LoginPage = ({ navigation }) => {
                         style={styles.linkButton}
                         onPress={() => navigation.navigate('Register')}
                     >
-                        <Text style={styles.linkText}>Pas encore de compte?Créer un compte</Text>
+                        <Text style={styles.linkText}>Pas encore de compte ?</Text>
                     </TouchableOpacity>
                 </View>
             ) : (
@@ -94,61 +119,83 @@ const styles = StyleSheet.create({
         width: '100%',
         height: '100%',
         justifyContent: 'center',
+        backgroundColor: '#0339C5', // Couleur d'arrière-plan ajoutée
     },
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start', 
-        paddingTop: 135, 
-        paddingHorizontal: 20, 
+        justifyContent: 'flex-start',
+        paddingTop: 100, // Légèrement plus haut
+        paddingHorizontal: 20,
     },
     logo: {
-        width: 120, 
+        width: 120,
         height: 120,
-        marginBottom: 30, 
+        marginBottom: 30,
     },
     title: {
         fontSize: 24,
         color: '#fff',
         marginBottom: 20,
     },
+    inputContainer: {
+        width: '100%',
+        marginBottom: 20,
+        alignItems: 'flex-start',
+    },
+    label: {
+        color: '#fff',
+        fontSize: 16,
+        marginBottom: 5,
+    },
     input: {
         width: '100%',
         backgroundColor: '#fff',
         padding: 15,
         borderRadius: 10,
-        marginBottom: 10,
         fontSize: 16,
+    },
+    passwordInput: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        width: '100%',
+        backgroundColor: '#fff',
+        borderRadius: 10,
+        fontSize: 16,
+    },
+    passwordTextInput: {
+        flex: 1,
+        padding: 15,
+    },
+    eyeIcon: {
+        width: 24,
+        height: 24,
+        marginRight: 10,
     },
     button: {
         width: '100%',
         padding: 15,
-        backgroundColor: '#fff', 
+        backgroundColor: '#fff',
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 60, 
-        marginBottom: 1, 
+        marginTop: 20,
+        marginBottom: 10,
     },
     buttonText: {
-        color: '#000000', 
+        color: '#000000',
         fontSize: 16,
         fontWeight: 'light',
     },
     linkButton: {
-        position: 'absolute',
-        bottom: 20,
         width: '100%',
         alignItems: 'center',
-        padding: 10 ,
+        padding: 10,
     },
     linkText: {
         color: '#fff',
         textDecorationLine: 'underline',
-        bottom: 5, 
-        padding: 20 ,
         textAlign: 'center',
-
     },
 });
 
