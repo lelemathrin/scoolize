@@ -8,7 +8,7 @@ import {
     Alert,
     ActivityIndicator,
     ImageBackground,
-    Image // Import the Image component
+    Image 
 } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
@@ -28,7 +28,7 @@ const LoginPage = ({ navigation }) => {
         try {
             setIsLoading(true);
             await signInWithEmailAndPassword(auth, email, password);
-            navigation.navigate('Main'); // Redirection après connexion réussie
+            navigation.navigate('from'); // Redirection après connexion réussie
         } catch (error) {
             Alert.alert("Erreur de Connexion", error.message);
         } finally {

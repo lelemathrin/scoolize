@@ -8,7 +8,7 @@ import {
     Alert,
     ActivityIndicator,
     ImageBackground,
-    Image // Import the Image component
+    Image 
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
@@ -31,7 +31,7 @@ const RegisterPage = ({ navigation }) => {
             // Navigate to the next screen or perform additional setup
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'AdditionalInfo' }], // Replace 'Form' with the actual route you wish to navigate to
+                routes: [{ name: 'Form' }], // Replace 'Form' with the actual route you wish to navigate to
             });
         } catch (error) {
             Alert.alert("Erreur", error.message);
