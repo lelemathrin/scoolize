@@ -19,7 +19,7 @@ const LoginPage = ({ navigation }) => {
           setIsLoading(true);
           await signInWithEmailAndPassword(auth, email, password);
           // Redirection après connexion réussie
-          navigation.navigate('Home');
+          navigation.navigate('Main');
         } catch (error) {
           Alert.alert("Erreur de Connexion", error.message);
         } finally {
