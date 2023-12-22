@@ -28,7 +28,7 @@ const LoginPage = ({ navigation }) => {
         try {
             setIsLoading(true);
             await signInWithEmailAndPassword(auth, email, password);
-            navigation.navigate('from'); // Redirection après connexion réussie
+            navigation.navigate('Main'); // Redirection après connexion réussie
         } catch (error) {
             Alert.alert("Erreur de Connexion", error.message);
         } finally {

@@ -31,7 +31,7 @@ const RegisterPage = ({ navigation }) => {
             // Navigate to the next screen or perform additional setup
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'Form' }], // Replace 'Form' with the actual route you wish to navigate to
+                routes: [{ name: 'Main' }], 
             });
         } catch (error) {
             Alert.alert("Erreur", error.message);
