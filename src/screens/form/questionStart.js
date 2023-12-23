@@ -15,7 +15,7 @@ const FormStartScreen = ({ navigation }) => {
                 <Text>Yes</Text>
             </TouchableOpacity>
             <TouchableOpacity 
-                onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Home' }] })} 
+                onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Main' }] })} 
                 style={styles.button}>
                 <Text>No</Text>
             </TouchableOpacity>
