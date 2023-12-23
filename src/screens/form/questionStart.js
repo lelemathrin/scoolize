@@ -2,23 +2,27 @@ import React from 'react';
 import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
 
 const FormStartScreen = ({ navigation }) => {
-
     return (
         <View style={styles.container}>
-            <Text style={styles.text}>Would you like to start the form?</Text>
-            <TouchableOpacity 
-                onPress={() => navigation.reset({ 
-                    index: 0, 
-                    routes: [{ name: 'QuestionOne'}],
-                })}
-                style={styles.button}>
-                <Text>Yes</Text>
-            </TouchableOpacity>
-            <TouchableOpacity 
-                onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Home' }] })} 
-                style={styles.button}>
-                <Text>No</Text>
-            </TouchableOpacity>
+            <Text style={styles.title}>Voulez-vous participer au questionnaire de personnalité ?</Text>
+            <Text style={styles.description}>
+                Il te permettra de trier tes envies et de recevoir des recommandations.
+            </Text>
+            <View style={styles.buttonContainer}>
+                <TouchableOpacity 
+                    onPress={() => navigation.reset({ 
+                        index: 0, 
+                        routes: [{ name: 'QuestionOne'}],
+                    })}
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Oui</Text>
+                </TouchableOpacity>
+                <TouchableOpacity 
+                    onPress={() => navigation.reset({ index: 0, routes: [{ name: 'Home' }] })} 
+                    style={styles.button}>
+                    <Text style={styles.buttonText}>Plus tard</Text>
+                </TouchableOpacity>
+            </View>
         </View>
     );
 };
@@ -26,19 +30,40 @@ const FormStartScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#4B9CD3', // Assuming this is the background color from the screenshot
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
     },
-    text: {
+    title: {
+        fontSize: 24,
+        color: 'white',
+        textAlign: 'center',
+        marginBottom: 10,
+    },
+    description: {
         fontSize: 18,
-        marginBottom: 20,
+        color: 'white',
+        textAlign: 'center',
+        marginBottom: 30,
+    },
+    buttonContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-around',
+        width: '100%',
     },
     button: {
-        backgroundColor: '#ade',
-        padding: 10,
-        borderRadius: 5,
-        marginBottom: 10,
+        backgroundColor: 'white',
+        paddingVertical: 15,
+        paddingHorizontal: 40,
+        borderRadius: 20,
+        marginHorizontal: 10,
+        marginTop: 70,
+    },
+    buttonText: {
+        color: '#4B9CD3', // Assuming this is the text color from the screenshot
+        fontSize: 18,
+        textAlign: 'center',
     },
 });
 

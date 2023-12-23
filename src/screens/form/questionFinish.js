@@ -43,9 +43,11 @@ const FinishScreen = ({ navigation }) => {
 
     return (
         <View style={styles.container}>
-            <Text style={styles.congratsText}>{'Félicitations ! Maintenant qu’on en sait plus sur toi, tu peux commencer à faire tes vœux. Nous serons là pour t’accompagner.'}</Text>
-            <TouchableOpacity onPress={handleSubmitAndGoHome} style={styles.homeButton}>
-                <Text>Continuer</Text>
+            <Text style={styles.congratsText}>
+                Félicitation !{'\n'}Maintenant qu’on en sait plus sur toi, tu peux commencer à faire tes vœux.{'\n'}Nous serons là pour t’accompagner.
+            </Text>
+            <TouchableOpacity onPress={handleSubmitAndGoHome} style={styles.continueButton}>
+                <Text style={styles.continueButtonText}>Continuer</Text>
             </TouchableOpacity>
         </View>
     );
@@ -54,19 +56,31 @@ const FinishScreen = ({ navigation }) => {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
+        backgroundColor: '#4B9CD3', // Assuming this is the background color from the screenshot
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
     },
     congratsText: {
-        fontSize: 20,
+        fontSize: 22,
+        color: 'white',
         textAlign: 'center',
-        marginBottom: 20,
+        marginBottom: 40,
+        paddingHorizontal: 20,
     },
-    homeButton: {
-        backgroundColor: '#ade',
-        padding: 10,
-        borderRadius: 5,
+    continueButton: {
+        backgroundColor: 'white',
+        paddingVertical: 15,
+        paddingHorizontal: 60,
+        borderRadius: 30,
+        marginBottom: 20, 
+        marginTop: 70,
+    },
+    continueButtonText: {
+        color: '#4B9CD3',
+        fontSize: 20,
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
 });
 

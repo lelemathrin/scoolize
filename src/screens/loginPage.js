@@ -8,7 +8,7 @@ import {
     Alert,
     ActivityIndicator,
     ImageBackground,
-    Image // Import the Image component
+    Image 
 } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
