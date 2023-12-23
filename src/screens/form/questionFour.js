@@ -7,7 +7,7 @@ const QuestionFour = ({ navigation }) => {
     const [selectedOption, setSelectedOption] = useState('');
 
     const handleOptionSelect = (option) => {
-        setSelectedOption(option); // Directly set the new option
+        setSelectedOption(option);
     };
 
     const handleNext = () => {
@@ -17,25 +17,39 @@ const QuestionFour = ({ navigation }) => {
         }
 
         updateFormData('question4', selectedOption);
-        navigation.navigate('QuestionFinish'); // Navigate to the next question
+        navigation.navigate('QuestionFinish');
     };
 
-    const options = ['Moins de 5 km', '10 à 20 km', '20 à 35 km', '35 à 50 km', '50 à 100 km', 'Plus de 100 km'];
+    const options = [
+        'Moins de 5 km',
+        '10-20 km',
+        '20-35 km',
+        '35-50 km',
+        '50-100 km',
+        'Plus de 100 km'
+    ];
 
     return (
         <View style={styles.container}>
-            <Text>Quelle est la distance maximale, en kilomètres, que tu serais prêt à parcourir pour tes études ?</Text>
-            {options.map(option => (
-                <TouchableOpacity
-                    key={option}
-                    style={[styles.option, selectedOption === option ? styles.selected : null]}
-                    onPress={() => handleOptionSelect(option)}
-                >
-                    <Text>{option}</Text>
-                </TouchableOpacity>
-            ))}
+            <Text style={styles.questionText}>
+                Quelle est la distance maximale, en kilomètres, que tu serais prêt à parcourir pour tes études ?
+            </Text>
+            <View style={styles.optionsContainer}>
+                {options.map((option, index) => (
+                    <TouchableOpacity
+                        key={index}
+                        style={[
+                            styles.option,
+                            selectedOption === option && styles.selectedOption
+                        ]}
+                        onPress={() => handleOptionSelect(option)}
+                    >
+                        <Text style={styles.optionText}>{option}</Text>
+                    </TouchableOpacity>
+                ))}
+            </View>
             <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                <Text>Next</Text>
+                <Text style={styles.nextButtonText}>Continuer</Text>
             </TouchableOpacity>
         </View>
     );
@@ -47,21 +61,46 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center',
         padding: 20,
+        backgroundColor: '#4B9CD3', // Blue background color
+    },
+    questionText: {
+        color: 'white',
+        fontSize: 22,
+        textAlign: 'center',
+        marginBottom: 30
+    },
+    optionsContainer: {
+        alignSelf: 'stretch',
+        marginHorizontal: 20,
+        marginBottom: 30
     },
     option: {
-        padding: 10,
-        borderWidth: 1,
-        borderColor: '#ddd',
-        borderRadius: 5,
+        backgroundColor: 'rgba(255, 255, 255, 0.3)',
+        borderRadius: 25,
+        paddingVertical: 15,
         marginBottom: 10,
+        alignItems: 'center',
+        justifyContent: 'center'
     },
-    selected: {
-        backgroundColor: '#cde',
+    selectedOption: {
+        backgroundColor: 'rgba(255, 255, 255, 0.7)',
+    },
+    optionText: {
+        color: 'white',
+        fontSize: 18
     },
     nextButton: {
-        backgroundColor: '#ade',
-        padding: 10,
-        borderRadius: 5,
+        backgroundColor: 'white',
+        borderRadius: 25,
+        paddingVertical: 15,
+        paddingHorizontal: 30,
+        width: '100%', // Full width button
+        alignItems: 'center' // Center text horizontally
+    },
+    nextButtonText: {
+        color: '#4B9CD3', // Blue text color
+        fontSize: 18,
+        fontWeight: 'bold'
     }
 });
 

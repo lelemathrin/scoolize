@@ -8,7 +8,7 @@ import {
     Alert,
     ActivityIndicator,
     ImageBackground,
-    Image // Import the Image component
+    Image 
 } from 'react-native';
 import { createUserWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
@@ -18,9 +18,11 @@ const RegisterPage = ({ navigation }) => {
     const [password, setPassword] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
+    const [firstName, setFirstName] = useState('');
+    const [lastName, setLastName] = useState('');
 
     const handleSignUp = async () => {
-        if (!email || !password) {
+        if (!email || !password || !firstName || !lastName) {
             Alert.alert("Erreur", "Veuillez remplir tous les champs.");
             return;
         }
@@ -31,7 +33,7 @@ const RegisterPage = ({ navigation }) => {
             // Navigate to the next screen or perform additional setup
             navigation.reset({
                 index: 0,
-                routes: [{ name: 'AdditionalInfo' }], // Replace 'Form' with the actual route you wish to navigate to
+                routes: [{ name: 'AdditionalInfo' }], // Remplacez 'AdditionalInfo' par la véritable route vers laquelle vous souhaitez naviguer
             });
         } catch (error) {
             Alert.alert("Erreur", error.message);
@@ -42,32 +44,63 @@ const RegisterPage = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={require('../../assets/overlay.png')} // Replace with your desired background image
+            source={require('../../assets/overlay.png')} // Remplacez par l'image de fond souhaitée
             style={styles.backgroundImage}
             onLoadEnd={() => setImageLoaded(true)}
         >
             {imageLoaded ? (
                 <View style={styles.container}>
                     <Image
-                        source={require('../../assets/logo.png')} // Replace with your logo image path
+                        source={require('../../assets/logo.png')} // Remplacez par le chemin de votre logo
                         style={styles.logo}
                     />
-                    <Text style={styles.title}>Créer un compte</Text>
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Votre mail"
-                        value={email}
-                        onChangeText={setEmail}
-                        keyboardType="email-address"
-                        autoCapitalize="none"
-                    />
-                    <TextInput
-                        style={styles.input}
-                        placeholder="Votre mot de passe"
-                        value={password}
-                        onChangeText={setPassword}
-                        secureTextEntry
-                    />
+                    <Text style={styles.title}>Inscription</Text>
+                    
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Prénom</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Votre prénom"
+                            value={firstName}
+                            onChangeText={setFirstName}
+                            autoCapitalize="words"
+                        />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Nom</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Votre nom"
+                            value={lastName}
+                            onChangeText={setLastName}
+                            autoCapitalize="words"
+                        />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Email</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Votre mail"
+                            value={email}
+                            onChangeText={setEmail}
+                            keyboardType="email-address"
+                            autoCapitalize="none"
+                        />
+                    </View>
+
+                    <View style={styles.inputContainer}>
+                        <Text style={styles.label}>Mot de passe</Text>
+                        <TextInput
+                            style={styles.input}
+                            placeholder="Votre mot de passe"
+                            value={password}
+                            onChangeText={setPassword}
+                            secureTextEntry
+                        />
+                    </View>
+
                     <TouchableOpacity
                         style={styles.button}
                         onPress={handleSignUp}
@@ -79,9 +112,14 @@ const RegisterPage = ({ navigation }) => {
                             <Text style={styles.buttonText}>S’inscrire</Text>
                         )}
                     </TouchableOpacity>
+
+                    <Text style={styles.termsText}>
+                        En vous inscrivant, vous acceptez nos conditions générales et notre politique de confidentialité.
+                    </Text>
+
                     <TouchableOpacity
                         style={styles.linkButton}
-                        onPress={() => navigation.navigate('Login')} // Make sure 'Login' is your login screen's route name
+                        onPress={() => navigation.navigate('Login')} // Assurez-vous que 'Login' est le nom de la route vers l'écran de connexion
                     >
                         <Text style={styles.linkText}>Déjà inscrit ? Se Connecter</Text>
                     </TouchableOpacity>
@@ -89,7 +127,8 @@ const RegisterPage = ({ navigation }) => {
             ) : (
                 <ActivityIndicator
                     size={'large'}
-                    color={'#0339C5'} />
+                    color={'#0339C5'}
+                />
             )}
         </ImageBackground>
     );
@@ -97,33 +136,40 @@ const RegisterPage = ({ navigation }) => {
 
 const styles = StyleSheet.create({
     backgroundImage: {
-        width: '100%',
-        height: '100%',
+        flex: 1,
+        alignItems: 'center',
         justifyContent: 'center',
     },
     container: {
-        flex: 1,
+        width: '80%',
         alignItems: 'center',
-        justifyContent: 'flex-start', 
-        paddingTop: 135, 
-        paddingHorizontal: 20, 
+        marginTop: 20, // Espace au-dessus du contenu
     },
     logo: {
         width: 120, 
         height: 120, 
-        marginBottom: 30, 
+        marginBottom: 10, // Logo légèrement descendu
     },
     title: {
         fontSize: 24,
         color: '#fff',
         marginBottom: 20,
     },
+    inputContainer: {
+        width: '100%',
+        marginBottom: 20,
+        alignItems: 'flex-start',
+    },
+    label: {
+        color: '#fff',
+        fontSize: 16,
+        marginBottom: 5,
+    },
     input: {
         width: '100%',
         backgroundColor: '#fff',
         padding: 15,
         borderRadius: 10,
-        marginBottom: 10,
         fontSize: 16,
     },
     button: {
@@ -133,8 +179,8 @@ const styles = StyleSheet.create({
         borderRadius: 25,
         alignItems: 'center',
         justifyContent: 'center',
-        marginTop: 60, 
-        marginBottom: 1, 
+        marginTop: 20, 
+        marginBottom: 10, 
     },
     buttonText: {
         color: '#000000',
@@ -142,8 +188,6 @@ const styles = StyleSheet.create({
         fontWeight: 'light',
     },
     linkButton: {
-        position: 'absolute',
-        bottom: 20,
         width: '100%',
         alignItems: 'center',
         padding: 10 
@@ -151,9 +195,13 @@ const styles = StyleSheet.create({
     linkText: {
         color: '#fff',
         textDecorationLine: 'underline',
-        position: 'absolute',
-        bottom: 5, 
         padding: 20 
     },
+    termsText: {
+        color: '#fff',
+        textAlign: 'center',
+        marginTop: 15,
+    },
 });
+
 export default RegisterPage;
