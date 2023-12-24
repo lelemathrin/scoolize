@@ -13,7 +13,6 @@ const QuestionOne = ({ navigation }) => {
     return (
         <View style={styles.container}>
             <Text style={styles.title}>As-tu déjà identifié un domaine d'étude qui t'intéresse ?</Text>
-            <Text style={styles.description}>Cela nous aidera à personnaliser tes recommandations.</Text>
             <View style={styles.buttonContainer}>
                 <TouchableOpacity 
                     style={styles.button} 

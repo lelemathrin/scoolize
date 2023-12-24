@@ -17,15 +17,12 @@ import * as ImagePicker from 'expo-image-picker';
 import { useUserContext } from '../contexts/userContext';
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
 import { getStorage, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage';
-import { ScrollView } from 'react-native-gesture-handler';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import ButtonLarge from '../components/buttonLarge';
-import firebase from 'firebase/app';
 
 const AdditionalInfoScreen = ({ navigation }) => {
 	const [imageLoaded, setImageLoaded] = useState(false);
 	const { userId } = useUserContext();
-	const [firstName, setFirstName] = useState('');
-	const [lastName, setLastName] = useState('');
 	const [age, setAge] = useState('');
 	const [currentClass, setCurrentClass] = useState('');
 	const [specialty, setSpecialty] = useState('');
@@ -53,23 +50,6 @@ const AdditionalInfoScreen = ({ navigation }) => {
 		  setProfilePicture(result.assets[0].uri);
 		}
 	  };
-
-	useEffect(() => {
-		const keyboardDidShowListener = Keyboard.addListener(
-			'keyboardDidShow',
-			(event) => setKeyboardOffset(event.endCoordinates.height)
-		);
-
-		const keyboardDidHideListener = Keyboard.addListener(
-			'keyboardDidHide',
-			() => setKeyboardOffset(0)
-		);
-
-		return () => {
-			keyboardDidShowListener.remove();
-			keyboardDidHideListener.remove();
-		};
-	}, []);
 	
 	const handleSubmit = async () => {
 	  if (!userId) {
@@ -78,8 +58,6 @@ const AdditionalInfoScreen = ({ navigation }) => {
 	  }
 	
 	  if (
-		!firstName ||
-		!lastName ||
 		!age ||
 		!currentClass ||
 		!specialty ||
@@ -94,8 +72,6 @@ const AdditionalInfoScreen = ({ navigation }) => {
 	
 	  try {
 		const dataToSubmit = {
-		  firstName,
-		  lastName,
 		  age,
 		  currentClass,
 		  specialty,
@@ -141,10 +117,9 @@ const AdditionalInfoScreen = ({ navigation }) => {
 			onLoadEnd={() => setImageLoaded(true)}>
 			{imageLoaded ? (
 				<>
-					<KeyboardAvoidingView
-						behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
+					<KeyboardAwareScrollView
+						extraScrollHeight={20}>
 						<View style={styles.container}>
-							<ScrollView>
 								<View style={styles.photo}>
 									<TouchableOpacity onPress={selectProfilePicture}>
 										<Image
@@ -157,24 +132,6 @@ const AdditionalInfoScreen = ({ navigation }) => {
 										/>
 									</TouchableOpacity>
 									<Text style={styles.photoFont}>Éditer</Text>
-								</View>
-								<View style={styles.inputContainer}>
-									<Text style={styles.font}>Prénom</Text>
-									<TextInput
-										style={styles.input}
-										placeholder='Alexis'
-										placeholderTextColor='grey'
-										onChangeText={setFirstName}
-									/>
-								</View>
-								<View style={styles.inputContainer}>
-									<Text style={styles.font}>Nom</Text>
-									<TextInput
-										style={styles.input}
-										placeholder='Dupont'
-										placeholderTextColor='grey'
-										onChangeText={setLastName}
-									/>
 								</View>
 								<View style={styles.inputContainer}>
 									<Text style={styles.font}>Âge</Text>
@@ -213,7 +170,6 @@ const AdditionalInfoScreen = ({ navigation }) => {
 									/>
 								</View>
 								<View style={{ height: 20 }} />
-							</ScrollView>
 							<ButtonLarge
 								style={[styles.absoluteButton]}
 								title='Soumettre'
@@ -222,7 +178,7 @@ const AdditionalInfoScreen = ({ navigation }) => {
 								textColor='black'
 							/>
 						</View>
-					</KeyboardAvoidingView>
+					</KeyboardAwareScrollView>
 				</>
 			) : (
 				<ActivityIndicator

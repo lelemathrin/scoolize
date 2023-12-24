@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useFormContext } from '../../contexts/formContext';
 import { useUserContext } from '../../contexts/userContext'; // Import useUserContext
 import { getFirestore, doc, setDoc } from 'firebase/firestore';
@@ -42,6 +42,17 @@ const FinishScreen = ({ navigation }) => {
     };
 
     return (
+        <>
+        <TouchableOpacity 
+        activeOpacity={1}
+        style={styles.arrowContainer}
+        onPress={() => navigation.goBack()} // Go to the previous page in the stack when pressed
+        >
+        <Image
+            source={require('../../../assets/arrow.png')} // Remplacez par le chemin de votre logo
+            style={styles.arrow}
+        />
+        </TouchableOpacity>
         <View style={styles.container}>
             <Text style={styles.congratsText}>
                 Félicitation !{'\n'}Maintenant qu’on en sait plus sur toi, tu peux commencer à faire tes vœux.{'\n'}Nous serons là pour t’accompagner.
@@ -50,10 +61,23 @@ const FinishScreen = ({ navigation }) => {
                 <Text style={styles.continueButtonText}>Continuer</Text>
             </TouchableOpacity>
         </View>
+        </>
     );
 };
 
 const styles = StyleSheet.create({
+    arrowContainer: {
+		width: 40,
+		height: 40,
+		position: 'absolute', // Position absolutely
+		top: 60, // At the top of the container
+		left: 10, // At the left of the container
+		zIndex: 1,
+	},
+	arrow: {
+		width: 28,
+		height: 28,
+	},
     container: {
         flex: 1,
         backgroundColor: '#4B9CD3', // Assuming this is the background color from the screenshot

@@ -1,118 +1,99 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity, StyleSheet, Alert } from 'react-native';
+import React from 'react';
+import { View, Text, TouchableOpacity, StyleSheet, Image } from 'react-native';
 import { useFormContext } from '../../contexts/formContext';
 
 const QuestionTwo = ({ navigation }) => {
-    const { updateFormData } = useFormContext();
-    const [selectedOptions, setSelectedOptions] = useState([]); // For multiple selections
+	const { updateFormData } = useFormContext();
 
-    // Define the options array
-    const options = ['Scientifique', 'Littéraire', 'Informatique', 'Communication', 'Sport', 'Psychologie'];
+	const handleAnswer = (answer) => {
+		updateFormData('question2', answer);
+		navigation.navigate('QuestionThree');
+	};
 
-    const handleToggleOption = (option) => {
-        if (selectedOptions.includes(option)) {
-            // If the option is already selected, remove it from the array
-            setSelectedOptions(selectedOptions.filter(selected => selected !== option));
-        } else {
-            // If the option is not selected, add it to the array
-            setSelectedOptions([...selectedOptions, option]);
-        }
-    };
-
-    const isSelected = (option) => selectedOptions.includes(option);
-
-    const handleNext = () => {
-        if (selectedOptions.length === 0) {
-            Alert.alert("Sélection requise", "Veuillez sélectionner au moins une option.");
-            return;
-        }
-
-        updateFormData('question2', selectedOptions);
-        navigation.navigate('QuestionThree'); // Navigate to the next question
-    };
-
-    return (
-        <View style={styles.container}>
-            <Text style={styles.question}>Quelles sont les branches susceptibles de t'intéresser ?</Text>
-            {options.map(option => (
-                <TouchableOpacity
-                    key={option}
-                    style={[styles.option, isSelected(option) ? styles.selectedOption : {}]}
-                    onPress={() => handleToggleOption(option)}
-                    activeOpacity={0.7}
-                >
-                    <Text style={styles.optionText}>{option}</Text>
-                    <View style={isSelected(option) ? styles.selectedCircle : styles.circle} />
-                </TouchableOpacity>
-            ))}
-            <TouchableOpacity onPress={handleNext} style={styles.nextButton}>
-                <Text style={styles.nextButtonText}>Continuer</Text>
-            </TouchableOpacity>
-        </View>
-    );
+	return (
+		<>
+			<TouchableOpacity
+				activeOpacity={1}
+				style={styles.arrowContainer}
+				onPress={() => navigation.goBack()} // Go to the previous page in the stack when pressed
+			>
+				<Image
+					source={require('../../../assets/arrow.png')} // Remplacez par le chemin de votre logo
+					style={styles.arrow}
+				/>
+			</TouchableOpacity>
+			<View style={styles.container}>
+				<Text style={styles.title}>
+					As-tu besoin de flexibilité dans les horaires de cours (par exemple,
+					cours du soir, options en ligne)
+				</Text>
+				<View style={styles.buttonContainer}>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => handleAnswer('oui')}>
+						<Text style={styles.buttonText}>Oui</Text>
+					</TouchableOpacity>
+					<TouchableOpacity
+						style={styles.button}
+						onPress={() => handleAnswer('non')}>
+						<Text style={styles.buttonText}>Non</Text>
+					</TouchableOpacity>
+				</View>
+			</View>
+		</>
+	);
 };
 
 const styles = StyleSheet.create({
-    container: {
-        flex: 1,
-        backgroundColor: '#4B9CD3', 
-        alignItems: 'center',
-        justifyContent: 'center',
-        padding: 20,
-    },
-    question: {
-        color: 'white',
-        fontSize: 22,
-        textAlign: 'center',
-        marginBottom: 30,
-    },
-    option: {
-        flexDirection: 'row',
-        alignItems: 'center',
-        backgroundColor: 'rgba(255, 255, 255, 0.3)', 
-        borderRadius: 20,
-        paddingVertical: 15,
-        paddingHorizontal: 20,
-        marginBottom: 10,
-        width: '100%',
-    },
-    selectedOption: {
-        backgroundColor: 'rgba(255, 255, 255, 0.5)', 
-    },
-    optionText: {
-        flex: 1,
-        color: 'white',
-        fontSize: 18,
-    },
-    circle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        borderWidth: 2,
-        borderColor: 'white',
-        marginRight: 10,
-    },
-    selectedCircle: {
-        width: 30,
-        height: 30,
-        borderRadius: 15,
-        backgroundColor: 'white',
-        marginRight: 10,
-    },
-    nextButton: {
-        backgroundColor: 'white',
-        borderRadius: 20,
-        paddingVertical: 15,
-        paddingHorizontal: 30,
-        marginTop: 20,
-        width: '100%', 
-        alignItems: 'center', 
-    },
-    nextButtonText: {
-        color: '#4B9CD3', 
-        fontSize: 18,
-        fontWeight: 'bold',
-    }
+	arrowContainer: {
+		width: 40,
+		height: 40,
+		position: 'absolute', // Position absolutely
+		top: 60, // At the top of the container
+		left: 10, // At the left of the container
+		zIndex: 1,
+	},
+	arrow: {
+		width: 28,
+		height: 28,
+	},
+	container: {
+		flex: 1,
+		backgroundColor: '#4B9CD3', // Matching the background color from code 1
+		alignItems: 'center',
+		justifyContent: 'center',
+		padding: 20,
+	},
+	title: {
+		fontSize: 24,
+		color: 'white',
+		textAlign: 'center',
+		marginBottom: 10, // Matching the title style from code 1
+	},
+	description: {
+		fontSize: 18,
+		color: 'white',
+		textAlign: 'center',
+		marginBottom: 30, // Matching the description style from code 1
+	},
+	buttonContainer: {
+		flexDirection: 'row',
+		justifyContent: 'space-around',
+		width: '100%',
+		marginTop: 70, // Adjusted to match the button container style from code 1
+	},
+	button: {
+		backgroundColor: 'white',
+		paddingVertical: 15,
+		paddingHorizontal: 40,
+		borderRadius: 20,
+		marginHorizontal: 10, // Matching the button style from code 1
+	},
+	buttonText: {
+		color: '#4B9CD3', // Matching the button text color from code 1
+		fontSize: 18,
+		textAlign: 'center',
+	},
 });
 
 export default QuestionTwo;

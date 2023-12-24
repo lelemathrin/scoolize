@@ -11,6 +11,7 @@ export default function App() {
     "Inter-Regular": require("./assets/fonts/Inter-Regular.ttf"),
     "Prompt-Black": require("./assets/fonts/Prompt-Black.ttf"),
     "Prompt-Regular": require("./assets/fonts/Prompt-Regular.ttf"),
+    "Prompt-Bold": require("./assets/fonts/Prompt-Bold.ttf"),
     "Helvetica-Regular": require("./assets/fonts/Helvetica.ttf"),
   });
 

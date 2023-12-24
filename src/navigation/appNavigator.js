@@ -25,7 +25,7 @@ const AppNavigator = () => {
 
 	return (
 		<NavigationContainer>
-			<Stack.Navigator initialRouteName='AdditionalInfo' screenOptions={{ headerShown: false }}>
+			<Stack.Navigator screenOptions={{ headerShown: false }}>
 				<Stack.Screen
 					name='Welcome'
 					component={Welcome}

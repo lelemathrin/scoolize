@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import {
     View,
     Text,
@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../services/firebaseConfig';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 const LoginPage = ({ navigation }) => {
     const [email, setEmail] = useState('');
@@ -19,6 +20,10 @@ const LoginPage = ({ navigation }) => {
     const [isLoading, setIsLoading] = useState(false);
     const [imageLoaded, setImageLoaded] = useState(false);
     const [showPassword, setShowPassword] = useState(false);
+
+    // Create refs
+    const emailRef = useRef();
+    const passwordRef = useRef();
 
     const toggleShowPassword = () => {
         setShowPassword(!showPassword);
@@ -54,6 +59,10 @@ const LoginPage = ({ navigation }) => {
             onLoadEnd={() => setImageLoaded(true)}
         >
             {imageLoaded ? (
+                <>
+                <KeyboardAwareScrollView
+                extraScrollHeight={20}>
+
                 <View style={styles.container}>
                     <Image
                         source={require('../../assets/logo.png')} // Replace with your logo path
@@ -61,14 +70,19 @@ const LoginPage = ({ navigation }) => {
                     />
                     <Text style={styles.title}>Connexion</Text>
                     <View style={styles.inputContainer}>
-                        <Text style={styles.label}>Email</Text>
+                        <Text style={styles.label}>E-mail</Text>
                         <TextInput
                             style={styles.input}
                             placeholder="Votre mail"
+                            placeholderTextColor={'grey'}
                             value={email}
                             onChangeText={setEmail}
                             keyboardType="email-address"
                             autoCapitalize="none"
+                            textContentType='emailAddress'
+                            returnKeyType='next'
+                            onSubmitEditing={() => passwordRef.current.focus()}
+                            ref={emailRef}
                         />
                     </View>
                     <View style={styles.inputContainer}>
@@ -77,9 +91,12 @@ const LoginPage = ({ navigation }) => {
                             <TextInput
                                 style={styles.passwordTextInput}
                                 placeholder="Votre mot de passe"
+                                placeholderTextColor={'grey'}
                                 value={password}
                                 onChangeText={setPassword}
                                 secureTextEntry={!showPassword}
+                                returnKeyType='done'
+                                ref={passwordRef}
                             />
                             <TouchableOpacity onPress={toggleShowPassword}>
                                 <Image
@@ -95,18 +112,21 @@ const LoginPage = ({ navigation }) => {
                         disabled={isLoading}
                     >
                         {isLoading ? (
-                            <ActivityIndicator size="small" color="#FFF" />
+                            <ActivityIndicator size="small" color="#000" />
                         ) : (
                             <Text style={styles.buttonText}>Se Connecter</Text>
                         )}
                     </TouchableOpacity>
+                </View>
+                </KeyboardAwareScrollView>
+
                     <TouchableOpacity
                         style={styles.linkButton}
                         onPress={() => navigation.navigate('Register')}
                     >
                         <Text style={styles.linkText}>Pas encore de compte ?</Text>
                     </TouchableOpacity>
-                </View>
+                </>
             ) : (
                 <ActivityIndicator size={'large'} color={'#0339C5'} />
             )}
@@ -124,9 +144,8 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
-        justifyContent: 'flex-start',
-        paddingTop: 100, // Légèrement plus haut
-        paddingHorizontal: 20,
+        paddingTop: 100,
+        paddingHorizontal: 25,
     },
     logo: {
         width: 120,
@@ -137,6 +156,7 @@ const styles = StyleSheet.create({
         fontSize: 24,
         color: '#fff',
         marginBottom: 20,
+        fontFamily: 'Prompt-Bold',
     },
     inputContainer: {
         width: '100%',
@@ -152,15 +172,14 @@ const styles = StyleSheet.create({
         width: '100%',
         backgroundColor: '#fff',
         padding: 15,
-        borderRadius: 10,
+        borderRadius: 5,
         fontSize: 16,
     },
     passwordInput: {
         flexDirection: 'row',
         alignItems: 'center',
-        width: '100%',
         backgroundColor: '#fff',
-        borderRadius: 10,
+        borderRadius: 5,
         fontSize: 16,
     },
     passwordTextInput: {
@@ -173,10 +192,10 @@ const styles = StyleSheet.create({
         marginRight: 10,
     },
     button: {
-        width: '100%',
+        width: 320,
         padding: 15,
         backgroundColor: '#fff',
-        borderRadius: 25,
+        borderRadius: 100,
         alignItems: 'center',
         justifyContent: 'center',
         marginTop: 20,
@@ -184,19 +203,21 @@ const styles = StyleSheet.create({
     },
     buttonText: {
         color: '#000000',
-        fontSize: 16,
-        fontWeight: 'light',
+        fontSize: 18,
+        fontFamily: 'Prompt-Regular',
     },
     linkButton: {
-        width: '100%',
+        flex: 1,
         alignItems: 'center',
-        padding: 10,
     },
     linkText: {
+        position: 'absolute', // Position absolutely
+        bottom: 50, // At the bottom of the nearest positioned ancestor
         color: '#fff',
         textDecorationLine: 'underline',
         textAlign: 'center',
-    },
+        width: '100%', // Take up the full width
+      },
 });
 
 export default LoginPage;
